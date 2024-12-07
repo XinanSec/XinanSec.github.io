@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>探幽安全-忘了爱</title>
+    <title>File Upload Form</title>
 </head>
 <body>
-    <h1>test</h1>
-    <br/>
-    <p>忘了爱~</p>
+    <h2>Upload a File</h2>
+    <form action="" method="post" enctype="multipart/form-data" target="upload_target">
+        <label for="file">Choose a file:</label>
+        <input type="file" name="file" id="file">
+        <br><br>
+        <input type="submit" value="Upload File">
+    </form>
+
+    <!-- This iframe will handle the server response -->
+    <iframe name="upload_target" style="display:none;"></iframe>
 </body>
-<script type="text/javascript">
-  alert("By.探幽安全-忘了爱");
-</script>
 </html>
